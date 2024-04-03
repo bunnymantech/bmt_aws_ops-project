@@ -20,9 +20,9 @@ About aws_ops_alpha
 这样做的好处是, 无论我选择哪种 CI 工具, 哪种 AWS Account Hierarchy, 哪种项目目录结构, 我都可以用非常少的一段代码跟已经实现好的 DevOps 逻辑相结合, 大大减少了 DevOps 的工作量. 我都可以快速的进行核心业务逻辑的开发, 而不用花费大量的时间在基础设施的搭建上.
 
 
-About monorepo_aws
+About bmt_aws_ops
 ------------------------------------------------------------------------------
-虽然 ``aws_ops_alpha`` 支持多种 CI 工具, 包括 GitHub Action 和 AWS CodeBuild 等. 在这个 ``monorepo_aws-project`` 项目中, **我们使用 GitHub Action 作为 CI 工具**. 使用 monorepo 作为项目目录结构. 以后任何时候我只要做企业级的 AWS 项目, 我就只需要 clone 这个 repo, 然后用种子项目模版为新项目生成代码库, 并且一键配置好所有的基础设施. 在过去, 为了一个新项目我可能需要几天时间来搭建基础设施. 现在, 我只需要几分钟时间就可以开始写核心业务逻辑了, 并在几分钟内就能将 App 按照顺序从 sandbox, test, 一路部署到 production 中 (该工具支持任意多的 environment, 不仅仅是 sbx, tst, prd).
+虽然 ``aws_ops_alpha`` 支持多种 CI 工具, 包括 GitHub Action 和 AWS CodeBuild 等. 在这个 ``bmt_aws_ops-project`` 项目中, **我们使用 GitHub Action 作为 CI 工具**. 使用 monorepo 作为项目目录结构. 以后任何时候我只要做企业级的 AWS 项目, 我就只需要 clone 这个 repo, 然后用种子项目模版为新项目生成代码库, 并且一键配置好所有的基础设施. 在过去, 为了一个新项目我可能需要几天时间来搭建基础设施. 现在, 我只需要几分钟时间就可以开始写核心业务逻辑了, 并在几分钟内就能将 App 按照顺序从 sandbox, test, 一路部署到 production 中 (该工具支持任意多的 environment, 不仅仅是 sbx, tst, prd).
 
 .. note::
 

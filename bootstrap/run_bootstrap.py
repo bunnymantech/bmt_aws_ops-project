@@ -7,7 +7,7 @@ import aws_ops_alpha.api as aws_ops_alpha
 # Enter your configuration below
 # ------------------------------------------------------------------------------
 # define project name, github organization, and github repository
-project_name = "monorepo_aws"
+project_name = "bmt_aws_ops"
 github_org = "MacHu-GWU"
 github_repo = f"{project_name}-project"
 
