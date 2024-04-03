@@ -8,7 +8,7 @@ from simple_cdk2.vendor.aws_ops_alpha.boostrap.github_action.api import (
 
 bsm_devops = BotoSesManager(profile_name="bmt_app_devops_us_east_1")
 stack_name = "monorepo-aws-github-oidc"
-github_org = "MacHu-GWU"
+github_org = "bunnymantech"
 github_repo = "bmt_aws_ops-project"
 gh_action_role_name = "monorepo-aws-github-oidc"
 oidc_provider_arn = f"arn:aws:iam::{bsm_devops.aws_account_id}:oidc-provider/token.actions.githubusercontent.com"
