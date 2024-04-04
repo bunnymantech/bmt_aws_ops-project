@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .base import Base, T_ID, T_STATUS
+from .base import Base, T_ID, T_STATUS, Resource
 
 
 class RdsDBInstanceStatusEnum:
@@ -39,13 +39,22 @@ class RdsDBInstanceStatusEnum:
 
 
 class RdsInstance(Base):
-    def list_resources(self, client, **kwargs) -> list[tuple[T_ID, T_STATUS]]:
+    def list_resources(self, client, **kwargs) -> list[Resource]:
         paginator = client.get_paginator("describe_db_instances")
-        tuples = list()
+        resources = list()
         for res in paginator.paginate():
             for dct in res.get("DBInstances", []):
-                tuples.append((dct["DBInstanceIdentifier"], dct["DBInstanceStatus"]))
-        return tuples
+                tags = {kv["Key"]: kv["Value"] for kv in dct.get("TagList", [])}
+                start_at, stop_at = self.get_start_stop_at(tags)
+                resource = Resource(
+                    id=dct["DBInstanceIdentifier"],
+                    status=dct["DBInstanceStatus"],
+                    start_at=start_at,
+                    stop_at=stop_at,
+                )
+                # print(resource) # for debug only
+                resources.append(resource)
+        return resources
 
     def is_ready_to_start(self, status: T_STATUS) -> bool:
         return status in [RdsDBInstanceStatusEnum.stopped]

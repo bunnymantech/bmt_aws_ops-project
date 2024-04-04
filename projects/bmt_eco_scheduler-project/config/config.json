@@ -15,6 +15,7 @@
         // note that if a json node been set by two expression multiple times,
         // the first one will be used
         // ---------------------------------------------------------------------
+        "*.delta": 600, // 10 minutes
         "*.lambda_functions": {
             "hello": {},
             "s3sync": {}

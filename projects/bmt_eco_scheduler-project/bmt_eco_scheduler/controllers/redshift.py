@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .base import Base, T_ID, T_STATUS
+from .base import Base, T_ID, T_STATUS, Resource
 
 
 class RedshiftClusterStatusEnum:
@@ -27,13 +27,22 @@ class RedshiftClusterStatusEnum:
 
 
 class RedshiftCluster(Base):
-    def list_resources(self, client, **kwargs) -> list[tuple[T_ID, T_STATUS]]:
+    def list_resources(self, client, **kwargs) -> list[Resource]:
         paginator = client.get_paginator("describe_clusters")
-        tuples = list()
+        resources = list()
         for res in paginator.paginate():
             for dct in res.get("Clusters", []):
-                tuples.append((dct["ClusterIdentifier"], dct["ClusterStatus"]))
-        return tuples
+                tags = {kv["Key"]: kv["Value"] for kv in dct.get("Tags", [])}
+                start_at, stop_at = self.get_start_stop_at(tags)
+                resource = Resource(
+                    id=dct["ClusterIdentifier"],
+                    status=dct["ClusterStatus"],
+                    start_at=start_at,
+                    stop_at=stop_at,
+                )
+                # print(resource)  # for debug only
+                resources.append(resource)
+        return resources
 
     def is_ready_to_start(self, status: T_STATUS) -> bool:
         return status in [
