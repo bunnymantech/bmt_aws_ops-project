@@ -28,7 +28,7 @@ from .pyproject import pyproject_ops
 simple_python_project = aws_ops_alpha.simple_python_project
 simple_config_project = aws_ops_alpha.simple_config_project
 simple_cdk_project = aws_ops_alpha.simple_cdk_project
-bmt_eco_scheduler_project = aws_ops_alpha.simple_lambda_project
+simple_lambda_project = aws_ops_alpha.simple_lambda_project
 
 
 def pip_install():
@@ -82,9 +82,9 @@ def deploy_config(check: bool = True):
         },
         parameter_with_encryption=True,
         check=check,
-        step=bmt_eco_scheduler_project.StepEnum.deploy_config.value,
-        truth_table=bmt_eco_scheduler_project.truth_table,
-        url=bmt_eco_scheduler_project.google_sheet_url,
+        step=simple_lambda_project.StepEnum.deploy_config.value,
+        truth_table=simple_lambda_project.truth_table,
+        url=simple_lambda_project.google_sheet_url,
     )
 
 
@@ -95,9 +95,9 @@ def run_unit_test(check: bool = True):
         env_name=detect_current_env(),
         pyproject_ops=pyproject_ops,
         check=check,
-        step=bmt_eco_scheduler_project.StepEnum.run_code_coverage_test.value,
-        truth_table=bmt_eco_scheduler_project.truth_table,
-        url=bmt_eco_scheduler_project.google_sheet_url,
+        step=simple_lambda_project.StepEnum.run_code_coverage_test.value,
+        truth_table=simple_lambda_project.truth_table,
+        url=simple_lambda_project.google_sheet_url,
     )
 
 
@@ -108,9 +108,9 @@ def run_cov_test(check: bool = True):
         env_name=detect_current_env(),
         pyproject_ops=pyproject_ops,
         check=check,
-        step=bmt_eco_scheduler_project.StepEnum.run_code_coverage_test.value,
-        truth_table=bmt_eco_scheduler_project.truth_table,
-        url=bmt_eco_scheduler_project.google_sheet_url,
+        step=simple_lambda_project.StepEnum.run_code_coverage_test.value,
+        truth_table=simple_lambda_project.truth_table,
+        url=simple_lambda_project.google_sheet_url,
     )
 
 
@@ -129,9 +129,9 @@ def build_doc(check: bool = True):
         env_name=detect_current_env(),
         pyproject_ops=pyproject_ops,
         check=check,
-        step=bmt_eco_scheduler_project.StepEnum.build_documentation.value,
-        truth_table=bmt_eco_scheduler_project.truth_table,
-        url=bmt_eco_scheduler_project.google_sheet_url,
+        step=simple_lambda_project.StepEnum.build_documentation.value,
+        truth_table=simple_lambda_project.truth_table,
+        url=simple_lambda_project.google_sheet_url,
     )
 
 
@@ -153,9 +153,9 @@ def deploy_versioned_doc(check: bool = True):
         bucket=config.env.s3dir_docs.bucket,
         prefix=config.env.s3dir_docs.key,
         check=check,
-        step=bmt_eco_scheduler_project.StepEnum.update_documentation.value,
-        truth_table=bmt_eco_scheduler_project.truth_table,
-        url=bmt_eco_scheduler_project.google_sheet_url,
+        step=simple_lambda_project.StepEnum.update_documentation.value,
+        truth_table=simple_lambda_project.truth_table,
+        url=simple_lambda_project.google_sheet_url,
     )
 
 
@@ -171,9 +171,9 @@ def deploy_latest_doc(check: bool = True):
         bucket=config.env.s3dir_docs.bucket,
         prefix=config.env.s3dir_docs.key,
         check=check,
-        step=bmt_eco_scheduler_project.StepEnum.update_documentation.value,
-        truth_table=bmt_eco_scheduler_project.truth_table,
-        url=bmt_eco_scheduler_project.google_sheet_url,
+        step=simple_lambda_project.StepEnum.update_documentation.value,
+        truth_table=simple_lambda_project.truth_table,
+        url=simple_lambda_project.google_sheet_url,
     )
 
 
@@ -188,7 +188,7 @@ def view_latest_doc():
 def build_lambda_source(
     verbose: bool = False,
 ):
-    return bmt_eco_scheduler_project.build_lambda_source(
+    return simple_lambda_project.build_lambda_source(
         pyproject_ops=pyproject_ops,
         verbose=verbose,
     )
@@ -197,7 +197,7 @@ def build_lambda_source(
 def publish_lambda_layer(
     check: bool = True,
 ):
-    return bmt_eco_scheduler_project.publish_lambda_layer(
+    return simple_lambda_project.publish_lambda_layer(
         semantic_branch_name=git_repo.semantic_branch_name,
         runtime_name=runtime.current_runtime_group,
         env_name=detect_current_env(),
@@ -208,9 +208,9 @@ def publish_lambda_layer(
         s3dir_lambda=config.env.s3dir_lambda,
         tags=config.env.devops_aws_tags,
         check=check,
-        step=bmt_eco_scheduler_project.StepEnum.publish_lambda_layer.value,
-        truth_table=bmt_eco_scheduler_project.truth_table,
-        url=bmt_eco_scheduler_project.google_sheet_url,
+        step=simple_lambda_project.StepEnum.publish_lambda_layer.value,
+        truth_table=simple_lambda_project.truth_table,
+        url=simple_lambda_project.google_sheet_url,
     )
 
 
@@ -223,7 +223,7 @@ def deploy_app(
     else:
         skip_prompt = True
     skip_prompt = True  # uncomment this if you always want to skip prompt
-    return bmt_eco_scheduler_project.deploy_app(
+    return simple_lambda_project.deploy_app(
         semantic_branch_name=git_repo.semantic_branch_name,
         runtime_name=runtime.current_runtime_group,
         env_name=detect_current_env(),
@@ -234,9 +234,9 @@ def deploy_app(
         stack_name=config.env.cloudformation_stack_name,
         skip_prompt=skip_prompt,
         check=check,
-        step=bmt_eco_scheduler_project.StepEnum.deploy_cdk_stack.value,
-        truth_table=bmt_eco_scheduler_project.truth_table,
-        url=bmt_eco_scheduler_project.google_sheet_url,
+        step=simple_lambda_project.StepEnum.deploy_cdk_stack.value,
+        truth_table=simple_lambda_project.truth_table,
+        url=simple_lambda_project.google_sheet_url,
     )
 
 
@@ -249,7 +249,7 @@ def delete_app(
     else:
         skip_prompt = True
     skip_prompt = True  # uncomment this if you always want to skip prompt
-    return bmt_eco_scheduler_project.delete_app(
+    return simple_lambda_project.delete_app(
         semantic_branch_name=git_repo.semantic_branch_name,
         runtime_name=runtime.current_runtime_group,
         env_name=detect_current_env(),
@@ -260,9 +260,9 @@ def delete_app(
         stack_name=config.env.cloudformation_stack_name,
         skip_prompt=skip_prompt,
         check=check,
-        step=bmt_eco_scheduler_project.StepEnum.delete_cdk_stack.value,
-        truth_table=bmt_eco_scheduler_project.truth_table,
-        url=bmt_eco_scheduler_project.google_sheet_url,
+        step=simple_lambda_project.StepEnum.delete_cdk_stack.value,
+        truth_table=simple_lambda_project.truth_table,
+        url=simple_lambda_project.google_sheet_url,
     )
 
 
@@ -270,16 +270,16 @@ def publish_lambda_version(
     check: bool = True,
 ):
     env_name = detect_current_env()
-    return bmt_eco_scheduler_project.publish_lambda_version(
+    return simple_lambda_project.publish_lambda_version(
         semantic_branch_name=git_repo.semantic_branch_name,
         runtime_name=runtime.current_runtime_group,
         env_name=detect_current_env(),
         bsm_workload=boto_ses_factory.get_env_bsm(env_name),
         lbd_func_name_list=config.env.lambda_function_name_list,
         check=check,
-        step=bmt_eco_scheduler_project.StepEnum.publish_new_lambda_version.value,
-        truth_table=bmt_eco_scheduler_project.truth_table,
-        url=bmt_eco_scheduler_project.google_sheet_url,
+        step=simple_lambda_project.StepEnum.publish_new_lambda_version.value,
+        truth_table=simple_lambda_project.truth_table,
+        url=simple_lambda_project.google_sheet_url,
     )
 
 
@@ -288,16 +288,16 @@ def run_int_test(check: bool = True):
         wait = False
     else:
         wait = True
-    bmt_eco_scheduler_project.run_int_test(
+    simple_lambda_project.run_int_test(
         semantic_branch_name=git_repo.semantic_branch_name,
         runtime_name=runtime.current_runtime_group,
         env_name=detect_current_env(),
         pyproject_ops=pyproject_ops,
         wait=wait,
         check=check,
-        step=bmt_eco_scheduler_project.StepEnum.run_integration_test.value,
-        truth_table=bmt_eco_scheduler_project.truth_table,
-        url=bmt_eco_scheduler_project.google_sheet_url,
+        step=simple_lambda_project.StepEnum.run_integration_test.value,
+        truth_table=simple_lambda_project.truth_table,
+        url=simple_lambda_project.google_sheet_url,
     )
 
 
@@ -315,9 +315,9 @@ def create_config_snapshot(check: bool = True):
         path_config_json=paths.path_config_json,
         path_config_secret_json=paths.path_config_secret_json,
         check=check,
-        step=bmt_eco_scheduler_project.StepEnum.create_artifact_snapshot.value,
-        truth_table=bmt_eco_scheduler_project.truth_table,
-        url=bmt_eco_scheduler_project.google_sheet_url,
+        step=simple_lambda_project.StepEnum.create_artifact_snapshot.value,
+        truth_table=simple_lambda_project.truth_table,
+        url=simple_lambda_project.google_sheet_url,
     )
 
 
@@ -336,9 +336,9 @@ def delete_config(check: bool = True):
         },
         use_parameter_store=True,
         check=check,
-        step=bmt_eco_scheduler_project.StepEnum.delete_config.value,
-        truth_table=bmt_eco_scheduler_project.truth_table,
-        url=bmt_eco_scheduler_project.google_sheet_url,
+        step=simple_lambda_project.StepEnum.delete_config.value,
+        truth_table=simple_lambda_project.truth_table,
+        url=simple_lambda_project.google_sheet_url,
     )
 
 
