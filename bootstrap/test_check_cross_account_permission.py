@@ -26,8 +26,9 @@ print_account_info(bsm)
 aws_region = "us-east-1"
 
 for env_name in workload_env_list:
-    print(f"assume the {env_name!r} deployer IAM Role")
     aws_account_id = os.environ[f"{env_name.upper()}_AWS_ACCOUNT_ID"]
+    masted_account_id = aws_account_id[:4] + '****' + aws_account_id[-4:]
+    print(f"assume the {env_name!r} ({masted_account_id}) deployer IAM Role")
     # note: we assume the workload environment and devops environment are in the
     # same aws region, this may not true in your setup
     role_name = get_iam_resource_name(env_name, aws_region)
